@@ -9,8 +9,6 @@ class BFS {
         this.generateBtn = document.getElementById("generate_btn");
         this.start = [Number(this.startXInput.value), Number(this.startYInput.value)];
         this.end = [Number(this.endXInput.value), Number(this.endYInput.value)];
-        console.log(this.start);
-        console.log(this.end);
         this.path = [];
         this.prime = {};
         this.visited = [];
@@ -22,10 +20,15 @@ class BFS {
         });
 
         this.algo_btn.addEventListener("click", () => {
-            console.log(document.getElementById("BFS").checked);
+            this.startXInput = document.getElementById("start_x");
+            this.startYInput = document.getElementById("start_y");
+            this.endXInput = document.getElementById("end_x");
+            this.endYInput = document.getElementById("end_y");
+            this.generateBtn = document.getElementById("generate_btn");
+            this.start = [Number(this.startXInput.value), Number(this.startYInput.value)];
+            this.end = [Number(this.endXInput.value), Number(this.endYInput.value)];
             if (document.getElementById("BFS").checked) {
                 this.runBFS();
-                console.log(this.table.rows[0].cells[0]);
             } else {
                 console.log("Nothing here");
             }
@@ -43,6 +46,8 @@ class BFS {
         this.path = [];
         this.visited = [];
         this.prime = {};
+        this.start = [, ];
+        this.end = [, ];
 
         this.generateGrid();
         
@@ -51,11 +56,12 @@ class BFS {
     runBFS() {
         this.visited.unshift(this.start);
         this.path.unshift(this.start);
-        console.log(this.checkVisited(1,1));
-        console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)].style.borderTop == "5px solid blue")
-        console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)])
-        console.log(this.path);
+        // console.log(this.checkVisited(1,1));
+        // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)].style.borderTop == "5px solid blue")
+        // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)])
+        
         while (true) {
+            console.log(this.path);
             try {
                 if (!this.checkVisited(this.path[this.path.length-1][0], this.path[this.path.length-1][1] - 1) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderTop.includes("blue") && !this.table.rows[(this.path[this.path.length-1][1]-1) - 1].cells[this.path[this.path.length-1][0]-1].style.borderBottom.includes("blue")) {
                     this.prime[[this.path[this.path.length-1][0], this.path[this.path.length-1][1] - 1]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
@@ -80,6 +86,7 @@ class BFS {
                     this.path.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
                     this.visited.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
                     this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.backgroundColor = "lightgreen";
+                    console.log("color changed NEEED TO DO THIS TO CHECKKKKKK")
                 }       
             } catch (error) {}
 
@@ -95,9 +102,6 @@ class BFS {
             this.path.pop();
             
             if (this.checkVisited(this.end[0], this.end[1])) {
-                console.log(this.prime);
-                console.log(this.prime[[this.end[0], this.end[1]]]);
-                console.log(this.prime[[this.end[0], this.end[1]]][0]);
                 break;
             }
         }
@@ -110,8 +114,6 @@ class BFS {
             try {
                 path.unshift(this.prime[[current[0], current[1]]][0]);
                 current = this.prime[[current[0], current[1]]][0];
-                console.log(path);
-                console.log(current);
             } catch (error) {
                 break;
             }
@@ -124,12 +126,12 @@ class BFS {
                 return;
             }
             this.table.rows[path[0][1]-1].cells[path[0][0]-1].style.backgroundColor = "darkgreen";
-            this.table.rows[0].cells[0].style.backgroundColor = "yellow";
+            this.table.rows[this.start[1]-1].cells[this.start[0]-1].style.backgroundColor = "yellow";
             path.shift();
         }
             , 100);
 
-
+        console.log(gridApp)
     }
 
     checkVisited(x, y) {
@@ -204,7 +206,6 @@ class BFS {
             table.appendChild(row);
         }
 
-        console.log(table);
         document.body.appendChild(table);
     }
 
@@ -224,3 +225,4 @@ class BFS {
 let gridApp = new BFS();
 
 
+console.log(gridApp)
