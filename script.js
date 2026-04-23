@@ -10,6 +10,9 @@ class BFS {
         this.start = [Number(this.startXInput.value), Number(this.startYInput.value)];
         this.end = [Number(this.endXInput.value), Number(this.endYInput.value)];
         this.path = [];
+        console.log(this.path)
+        this.path = []
+        console.log(this.path)
         this.prime = {};
         this.visited = [];
 
@@ -20,11 +23,6 @@ class BFS {
         });
 
         this.algo_btn.addEventListener("click", () => {
-            this.startXInput = document.getElementById("start_x");
-            this.startYInput = document.getElementById("start_y");
-            this.endXInput = document.getElementById("end_x");
-            this.endYInput = document.getElementById("end_y");
-            this.generateBtn = document.getElementById("generate_btn");
             this.start = [Number(this.startXInput.value), Number(this.startYInput.value)];
             this.end = [Number(this.endXInput.value), Number(this.endYInput.value)];
             if (document.getElementById("BFS").checked) {
@@ -35,33 +33,19 @@ class BFS {
             this.showPath();
         });
 
-        this.resetBtn = document.getElementById("reset_btn");
 
-        this.resetBtn.addEventListener("click", () => {
-            this.reset();
-        });
-    }
-
-    reset() {
-        this.path = [];
-        this.visited = [];
-        this.prime = {};
-        this.start = [, ];
-        this.end = [, ];
-
-        this.generateGrid();
-        
     }
 
     runBFS() {
+        console.log(this.path)
         this.visited.unshift(this.start);
         this.path.unshift(this.start);
+        console.log(this.path)
         // console.log(this.checkVisited(1,1));
         // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)].style.borderTop == "5px solid blue")
         // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)])
         
         while (true) {
-            console.log(this.path);
             try {
                 if (!this.checkVisited(this.path[this.path.length-1][0], this.path[this.path.length-1][1] - 1) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderTop.includes("blue") && !this.table.rows[(this.path[this.path.length-1][1]-1) - 1].cells[this.path[this.path.length-1][0]-1].style.borderBottom.includes("blue")) {
                     this.prime[[this.path[this.path.length-1][0], this.path[this.path.length-1][1] - 1]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
@@ -81,25 +65,39 @@ class BFS {
             } catch (error) {}
 
             try {
-                if (!this.checkVisited(this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderLeft.includes("blue") && !this.table.rows[this.path[this.path.length-1][1]-1].cells[(this.path[this.path.length-1][0]-1) - 1].style.borderRight.includes("blue")) {
+                if (!this.checkVisited((this.path[this.path.length-1][0] - 1), this.path[this.path.length-1][1]) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderLeft.includes("blue") && (!this.table.rows[this.path[this.path.length-1][1]-1].cells[(this.path[this.path.length-1][0]-1) - 1].style.borderRight.includes("blue") || this.path.length-1[0]-1 == 0)) {
                     this.prime[[this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
                     this.path.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
                     this.visited.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
+                    console.log("color changed 2 ")
                     this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.backgroundColor = "lightgreen";
-                    console.log("color changed NEEED TO DO THIS TO CHECKKKKKK")
                 }       
-            } catch (error) {}
+                    console.log("color changed ")
 
+            } catch (error) {}
             try {
-                if (!this.checkVisited(this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderRight.includes("blue") && !this.table.rows[this.path[this.path.length-1][1]-1].cells[(this.path[this.path.length-1][0]-1) + 1].style.borderLeft.includes("blue")) {
+                if (!this.checkVisited(this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]) && !this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.borderRight.includes("blue") && (!this.table.rows[this.path[this.path.length-1][1]-1].cells[(this.path[this.path.length-1][0]-1) + 1].style.borderLeft.includes("blue") || this.path.length-1[0]-1 == (this.columnCount()-1))) {
                     this.prime[[this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
                     this.path.unshift([this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]);
                     this.visited.unshift([this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]);
+                    console.log("color changed 4")
                     this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.backgroundColor = "lightgreen";
+                    console.log("color changed 6")
                 }
             } catch (error) {}
             
+            // for (let i = 0; i < this.path.length, i++;) {
+            //     console.log("smth")
+            //     console.log(i)
+            // }
+            console.log(this.path.length)
             this.path.pop();
+            let x = 0;
+            // while (x < this.path.length) {
+            //     console.log("smth")
+            //     console.log(this.path[x])
+            //     x++;
+            // }
             
             if (this.checkVisited(this.end[0], this.end[1])) {
                 break;
@@ -107,6 +105,16 @@ class BFS {
         }
     }
 
+    columnCount() {
+        let table = document.getElementById("table")
+        let columnCounts = 0;
+        let firstRow = table.rows[0]
+        for (let cell of firstRow.cells) {
+            columnCounts++;
+        }
+        return columnCounts
+
+    }
     showPath() {
         let path = [];
         let current = this.end;
@@ -131,7 +139,6 @@ class BFS {
         }
             , 100);
 
-        console.log(gridApp)
     }
 
     checkVisited(x, y) {
@@ -225,4 +232,3 @@ class BFS {
 let gridApp = new BFS();
 
 
-console.log(gridApp)
