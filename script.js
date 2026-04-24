@@ -10,9 +10,7 @@ class BFS {
         this.start = [Number(this.startXInput.value), Number(this.startYInput.value)];
         this.end = [Number(this.endXInput.value), Number(this.endYInput.value)];
         this.path = [];
-        console.log(this.path)
         this.path = []
-        console.log(this.path)
         this.prime = {};
         this.visited = [];
 
@@ -37,13 +35,8 @@ class BFS {
     }
 
     runBFS() {
-        console.log(this.path)
         this.visited.unshift(this.start);
         this.path.unshift(this.start);
-        console.log(this.path)
-        // console.log(this.checkVisited(1,1));
-        // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)].style.borderTop == "5px solid blue")
-        // console.log(this.table.rows[(this.path[this.path.length-1][1]-1)].cells[(this.path[this.path.length-1][0]-1)])
         
         while (true) {
             try {
@@ -69,10 +62,8 @@ class BFS {
                     this.prime[[this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
                     this.path.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
                     this.visited.unshift([this.path[this.path.length-1][0] - 1, this.path[this.path.length-1][1]]);
-                    console.log("color changed 2 ")
                     this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.backgroundColor = "lightgreen";
                 }       
-                    console.log("color changed ")
 
             } catch (error) {}
             try {
@@ -80,24 +71,11 @@ class BFS {
                     this.prime[[this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]] = [[this.path[this.path.length-1][0], this.path[this.path.length-1][1]]];
                     this.path.unshift([this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]);
                     this.visited.unshift([this.path[this.path.length-1][0] + 1, this.path[this.path.length-1][1]]);
-                    console.log("color changed 4")
                     this.table.rows[this.path[this.path.length-1][1]-1].cells[this.path[this.path.length-1][0]-1].style.backgroundColor = "lightgreen";
-                    console.log("color changed 6")
                 }
             } catch (error) {}
             
-            // for (let i = 0; i < this.path.length, i++;) {
-            //     console.log("smth")
-            //     console.log(i)
-            // }
-            console.log(this.path.length)
             this.path.pop();
-            let x = 0;
-            // while (x < this.path.length) {
-            //     console.log("smth")
-            //     console.log(this.path[x])
-            //     x++;
-            // }
             
             if (this.checkVisited(this.end[0], this.end[1])) {
                 break;
@@ -162,7 +140,7 @@ class BFS {
         let cell = e.target.closest('td');
         if (!cell) return; 
 
-        let margin = 5;
+        let margin = 6;
         let rect = cell.getBoundingClientRect();
         let x = e.clientX - rect.left; 
         let y = e.clientY - rect.top;  
@@ -230,5 +208,3 @@ class BFS {
 }
 
 let gridApp = new BFS();
-
-
